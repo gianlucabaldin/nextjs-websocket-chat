@@ -65,8 +65,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ messages, username, socket }) => {
   return (
     <div className="w-full flex flex-col items-center">
       <p className="flex flex-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-        Hi <span className="font-bold">{username}</span> and welcome to the
-        chat!
+        Hi&nbsp;<span className="font-bold">{username}</span>&nbsp;and welcome
+        to the chat!
       </p>
       <p className="flex flex-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
         Start typing a message and press enter or the button to send it to your
