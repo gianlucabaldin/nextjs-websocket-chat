@@ -14,8 +14,7 @@ io.on("connection", (socket) => {
 
   // Listen for incoming messages
   socket.on("message", (message) => {
-    console.log("Received message:", message);
-
+    console.log("Received message (server):", message);
     // Broadcast the message to all connected clients
     io.emit("message", message);
   });
@@ -27,6 +26,7 @@ io.on("connection", (socket) => {
 });
 
 const PORT = process.env.SERVER_PORT || 5000;
+
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
