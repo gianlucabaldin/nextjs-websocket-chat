@@ -9,6 +9,12 @@ const UsernameForm: React.FC<UsernameFormProps> = ({ onSubmitUsername }) => {
 
   const usernameRef = useRef<HTMLInputElement>(null);
 
+  /**
+   * Handles form submission and performs input validation.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - the form event
+   * @return {void}
+   */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const username = usernameRef.current!.value;

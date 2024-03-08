@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Socket } from "socket.io-client";
 import { IMessage } from "../types/types";
 import { generateRandomId, scrollToBottom } from "../utils/common";
@@ -11,36 +11,54 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ messages, username, socket }) => {
-  const [newMessage, setNewMessage] = useState("");
   const messagesRef = useRef<HTMLUListElement>(null);
+  const newMessageRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     scrollToBottom(messagesRef);
   }, [messages, messagesRef]);
 
-  const handleSendMessage = () => {
+  /**
+   * Sends a message through the "emit" socket event
+   *
+   * @param {string} message - the message to be sent
+   * @return {void}
+   */
+  const sendMessage = (message: string) => {
     if (socket) {
       const newMsg: IMessage = {
         username,
-        text: newMessage,
+        text: message,
         id: generateRandomId(),
         createdAt: new Date().toISOString(),
       };
       socket.emit("message", newMsg);
       scrollToBottom(messagesRef);
-      setNewMessage("");
+      newMessageRef.current!.value = "";
     } else {
       console.error("Error: Socket not connected");
     }
   };
 
-  const handleMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMessage(event.target.value);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newMessage = newMessageRef.current!.value;
+    sendMessage(newMessage);
   };
 
+  /**
+   * A function to handle "Enter" key press
+   *
+   * @param {React.KeyboardEvent} event - the keyboard event
+   * @return {void}
+   */
   const handleOnKeyUp = (event: React.KeyboardEvent) => {
+    event.preventDefault();
     if (event.key === "Enter") {
-      handleSendMessage();
+      const newMessage = newMessageRef.current!.value.trim();
+      if (newMessage !== "") {
+        sendMessage(newMessage);
+      }
     }
   };
 
@@ -64,21 +82,22 @@ const ChatBox: React.FC<ChatBoxProps> = ({ messages, username, socket }) => {
       </ul>
 
       <div className="w-full">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex justify-between items-center gap-x-4">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex justify-between items-center gap-x-4"
+          onSubmit={handleSubmit}
+        >
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="newMessage"
             type="text"
             placeholder="Type your message here..."
-            value={newMessage}
-            onChange={handleMessageChange}
             disabled={!socket}
             onKeyUp={handleOnKeyUp}
+            ref={newMessageRef}
           />
 
           <button
-            type="button"
-            onClick={handleSendMessage}
+            type="submit"
             disabled={!socket}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
           >
