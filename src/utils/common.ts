@@ -17,21 +17,6 @@ export const formatDateTime = (isoDateString: string): string => {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 };
 
-// export const getRandomUsername = () =>
-//   (Math.random() + 1).toString(36).substring(7);
-
-// if there was already a username saved before, used it
-// otherwise generate a new random one for the session
-// export const getUsername = () => {
-//   const sessionUsername = sessionStorage.getItem("username");
-//   if (sessionUsername) {
-//     return sessionUsername;
-//   }
-//   const randomUsername = getRandomUsername();
-//   sessionStorage.setItem("username", randomUsername);
-//   return randomUsername;
-// };
-
 /**
  * Scrolls the given HTMLUListElement to the bottom.
  *
