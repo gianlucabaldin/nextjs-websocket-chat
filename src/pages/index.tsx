@@ -1,6 +1,7 @@
 import ChatBox from "@/components/ChatBox";
 import UsernameForm from "@/components/UsernameForm";
 import { IMessage } from "@/types/types";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
@@ -38,20 +39,25 @@ export default function Home() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col items-center justify-center">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-8">
-        Chat App
-      </h1>
+    <>
+      <Head>
+        <title>Nextjs Websocket App</title>
+      </Head>
+      <main className="container mx-auto flex flex-col items-center justify-center">
+        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-8">
+          Chat App
+        </h1>
 
-      {username ? (
-        <ChatBox
-          messages={messages ?? []}
-          username={username}
-          socket={socket}
-        />
-      ) : (
-        <UsernameForm onSubmitUsername={handleUsernameSubmit} />
-      )}
-    </main>
+        {username ? (
+          <ChatBox
+            messages={messages ?? []}
+            username={username}
+            socket={socket}
+          />
+        ) : (
+          <UsernameForm onSubmitUsername={handleUsernameSubmit} />
+        )}
+      </main>
+    </>
   );
 }
