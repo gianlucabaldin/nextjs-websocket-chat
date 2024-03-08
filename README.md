@@ -1,6 +1,6 @@
 # Chat App
 
-![alt text](image-1.png)
+![alt text](image-2.png)
 
 Simple chat application simulates a chat room, just insert a username and start chatting!
 To chat between multiple user, simply open more browser tab or multiple browser instance and access to the same website!
