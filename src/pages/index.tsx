@@ -45,9 +45,10 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Chat App</h1>
-      <p>username = *{username}*</p>
+    <main className="container mx-auto flex flex-col items-center justify-center">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white py-8">
+        Chat App
+      </h1>
       {username ? (
         <>
           <div>
@@ -67,6 +68,6 @@ export default function Home() {
       ) : (
         <UsernameForm onSubmitUsername={handleUsernameSubmit} />
       )}
-    </div>
+    </main>
   );
 }
