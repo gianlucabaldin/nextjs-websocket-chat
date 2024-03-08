@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React, { useEffect, useState } from "react";
+import { Socket, io } from "socket.io-client";
 
 export default function Home() {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState(null);
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<string[]>([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     console.log("Connecting to WebSocket server...");
-    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL, {
+    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL as string, {
       transports: ["websocket"],
     });
 
@@ -16,7 +16,7 @@ export default function Home() {
       console.log("Connected to WebSocket server");
     });
 
-    newSocket.on("message", (newMessage) => {
+    newSocket.on("message", (newMessage: string) => {
       console.log("Received message:", newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
@@ -30,7 +30,7 @@ export default function Home() {
     };
   }, []);
 
-  const handleMessageSubmit = (e) => {
+  const handleMessageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim() && socket) {
       socket.emit("message", message);
